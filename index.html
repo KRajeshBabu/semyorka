@@ -1,21 +1,46 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="./resources/scripts/countuptimer.js"></script>
-    <link rel="stylesheet" href="./resources/css/layout2.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./resources/scripts/countuptimer.js" defer></script>
+    <link rel="stylesheet" href="./resources/css/layout2.css" />
     <title>Yay! It's Semyorka</title>
   </head>
   <body>
-    <header>
-      <h2>Yay! It's Semyorka</h2>
-    </header>
-    <div>
-      <div id="timer"></div>
-      <img src="./resources/media/day1.gif" style="display: block;margin-left: auto;margin-right: auto;" alt="Yay! Semyorka" />
-    </div>
-    <footer>
-      <!--<foo1>Page is maintained by K Rajesh Babu</foo1>-->
-    </footer>
+    <main class="page-shell">
+      <header class="hero">
+        <p class="hero-tag">Since 03 Aug 2021 • 04:46:59 PM</p>
+        <h1>Yay! It's Semyorka ✨</h1>
+        <p class="hero-subtitle">Watching every day of your little adventure.</p>
+        <p id="today-date" class="today-date">Today: --</p>
+      </header>
+
+      <section class="stats-card" aria-label="Age timer">
+        <div id="timer" class="timer-grid"></div>
+      </section>
+
+      <section class="feature-card" aria-label="Featured photo">
+        <img src="./resources/media/day1.gif" class="featured-image" alt="Semyorka day 1" />
+      </section>
+
+      <section class="gallery-card" aria-label="Photo placeholders">
+        <h2>Memory Wall</h2>
+        <p>Add new photos here as she grows 💕</p>
+        <div class="gallery-grid">
+          <article class="photo-placeholder">
+            <img src="./resources/media/babyloading.gif" alt="Placeholder for first smile" />
+            <span>First smile</span>
+          </article>
+          <article class="photo-placeholder">
+            <img src="./resources/media/babyloading.gif" alt="Placeholder for first steps" />
+            <span>First steps</span>
+          </article>
+          <article class="photo-placeholder">
+            <img src="./resources/media/babyloading.gif" alt="Placeholder for birthday memory" />
+            <span>Birthday memory</span>
+          </article>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
