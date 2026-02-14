@@ -1,29 +1,88 @@
-function updateTimer() {
-	// yyyy-MM-dd HH:mm:ss
-  past  = Date.parse("2021-08-03 16:46:59");
-  now     = new Date();
-  diff    = now - past;
+const birthDate = new Date(2021, 7, 3, 16, 46, 59);
 
-  years  = Math.floor( diff / (1000*60*60*24*30*12) );
-  months = Math.floor( diff / (1000*60*60*24*30) );
-  days   = Math.floor( diff / (1000*60*60*24) );
-  hours  = Math.floor( diff / (1000*60*60) );
-  mins   = Math.floor( diff / (1000*60) );
-  secs   = Math.floor( diff / 1000 );
+function getCalendarDiff(start, end) {
+  if (end < start) {
+    return {
+      years: 0,
+      months: 0,
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      totalDays: 0,
+    };
+  }
 
-  y = years;
-  M = months - years  * 12;
-  d = days   - months * 30;
-  h = hours  - days   * 24;
-  m = mins   - hours  * 60;
-  s = secs   - mins   * 60;
-  document.getElementById("timer")
-    .innerHTML =
-      '<div>' + y + '<span>years</span></div>' +
-      '<div>' + M + '<span>months</span></div>' +
-      '<div>' + d + '<span>days</span></div>' +
-      '<div>' + h + '<span>hours</span></div>' +
-      '<div>' + m + '<span>minutes</span></div>' +
-      '<div>' + s + '<span>seconds</span></div>' ;
+  const totalMs = end - start;
+  const totalDays = Math.floor(totalMs / (1000 * 60 * 60 * 24));
+
+  let years = end.getFullYear() - start.getFullYear();
+  const anchor = new Date(start);
+  anchor.setFullYear(anchor.getFullYear() + years);
+
+  if (anchor > end) {
+    years -= 1;
+    anchor.setFullYear(anchor.getFullYear() - 1);
+  }
+
+  let months = (end.getMonth() - anchor.getMonth() + 12) % 12;
+  anchor.setMonth(anchor.getMonth() + months);
+
+  if (anchor > end) {
+    months -= 1;
+    anchor.setMonth(anchor.getMonth() - 1);
+  }
+
+  let remainder = end - anchor;
+  const days = Math.floor(remainder / (1000 * 60 * 60 * 24));
+  remainder -= days * 1000 * 60 * 60 * 24;
+
+  const hours = Math.floor(remainder / (1000 * 60 * 60));
+  remainder -= hours * 1000 * 60 * 60;
+
+  const minutes = Math.floor(remainder / (1000 * 60));
+  remainder -= minutes * 1000 * 60;
+
+  const seconds = Math.floor(remainder / 1000);
+
+  return { years, months, days, hours, minutes, seconds, totalDays };
 }
-setInterval('updateTimer()', 1000 );
+
+function updateTimer() {
+  const now = new Date();
+  const age = getCalendarDiff(birthDate, now);
+
+  document.getElementById('timer').innerHTML = `
+    <div class="metric metric-primary">
+      <strong>${age.totalDays}</strong>
+      <span>Total days</span>
+    </div>
+    <div class="metric">
+      <strong>${age.years}</strong>
+      <span>Years</span>
+    </div>
+    <div class="metric">
+      <strong>${age.months}</strong>
+      <span>Months</span>
+    </div>
+    <div class="metric">
+      <strong>${age.days}</strong>
+      <span>Days</span>
+    </div>
+    <div class="metric">
+      <strong>${age.hours}</strong>
+      <span>Hours</span>
+    </div>
+    <div class="metric">
+      <strong>${age.minutes}</strong>
+      <span>Minutes</span>
+    </div>
+    <div class="metric">
+      <strong>${age.seconds}</strong>
+      <span>Seconds</span>
+    </div>
+  `;
+}
+
+updateTimer();
+setInterval(updateTimer, 1000);
